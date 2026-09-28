@@ -1,4 +1,6 @@
-# Citadel
+# Citadelscreen
+
+The software that citadel provides.
 
 > Your digital command center. Build your web. Control your day.
 
