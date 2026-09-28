@@ -14,6 +14,9 @@ const nextConfig = {
 
 module.exports = (phase) => ({
   ...nextConfig,
-  // Keep the everyday production build separate from hot-reload output.
-  distDir: phase === "phase-development-server" ? ".next" : ".next-production",
+  // Vercel expects .next; isolate production output only on local machines.
+  distDir:
+    process.env.VERCEL === "1" || phase === "phase-development-server"
+      ? ".next"
+      : ".next-production",
 });
