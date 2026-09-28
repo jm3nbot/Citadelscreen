@@ -1,0 +1,39 @@
+{
+  "name": "citadelscreen",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1 --port 3000",
+    "serve": "npm run build && npm run start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@google-cloud/vertexai": "^1.12.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.3.8",
+    "geist": "^1.7.0",
+    "googleapis": "^144.0.0",
+    "lucide-react": "^0.408.0",
+    "next": "14.2.5",
+    "next-auth": "^4.24.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
+    "reactflow": "^11.11.4",
+    "swr": "^2.2.5",
+    "tailwind-merge": "^2.4.0",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.6",
+    "typescript": "^5.5.3"
+  }
+}

@@ -1,0 +1,58 @@
+import type { Automation } from "@/lib/types";
+
+export const sampleAutomations: Automation[] = [
+  {
+    id: "auto_1",
+    name: "Summarize unread emails",
+    description: "Pulls today's unread Gmail threads and drops a concise digest into Notion.",
+    category: "email",
+    connectedAppIds: ["gmail", "claude", "notion"],
+    lastRunAt: new Date(Date.now() - 1000 * 60 * 35).toISOString(),
+    runs: 142,
+  },
+  {
+    id: "auto_2",
+    name: "Generate daily brief",
+    description: "Compiles calendar, priority emails, and outstanding reminders into a morning brief.",
+    category: "ai",
+    connectedAppIds: ["calendar", "gmail", "reminders", "claude"],
+    lastRunAt: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
+    runs: 88,
+  },
+  {
+    id: "auto_3",
+    name: "Send weekly status report",
+    description: "Synthesizes shipped work and outstanding blockers; sends Friday at 4pm.",
+    category: "reports",
+    connectedAppIds: ["github", "notion", "gmail"],
+    lastRunAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
+    runs: 32,
+  },
+  {
+    id: "auto_4",
+    name: "Backup Drive folder",
+    description: "Mirrors /citadel-ops to cold storage. Nightly at 02:00.",
+    category: "files",
+    connectedAppIds: ["drive"],
+    lastRunAt: new Date(Date.now() - 1000 * 60 * 60 * 9).toISOString(),
+    runs: 217,
+  },
+  {
+    id: "auto_5",
+    name: "Create task from email",
+    description: "Watches for flagged Gmail threads → creates a Task with a linked summary.",
+    category: "tasks",
+    connectedAppIds: ["gmail", "tasks"],
+    lastRunAt: new Date(Date.now() - 1000 * 60 * 90).toISOString(),
+    runs: 64,
+  },
+  {
+    id: "auto_6",
+    name: "Prepare meeting notes",
+    description: "Reads next event, drafts an agenda doc with linked context.",
+    category: "calendar",
+    connectedAppIds: ["calendar", "notion", "claude"],
+    lastRunAt: new Date(Date.now() - 1000 * 60 * 60 * 28).toISOString(),
+    runs: 47,
+  },
+];

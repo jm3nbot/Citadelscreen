@@ -1,0 +1,93 @@
+import type { Email } from "@/lib/types";
+
+const now = Date.now();
+const minutes = (n: number) => new Date(now - n * 60_000).toISOString();
+const hours = (n: number) => new Date(now - n * 3_600_000).toISOString();
+
+export const sampleEmails: Email[] = [
+  {
+    id: "em_1",
+    from: "Helena Cross",
+    fromInitials: "HC",
+    subject: "Partnership Follow-Up",
+    preview: "Following up on our call — the deck looks great. A couple of questions on pricing tiers...",
+    receivedAt: minutes(12),
+    unread: true,
+    priority: "high",
+    needsReply: true,
+    starred: true,
+    tags: ["partnerships"],
+  },
+  {
+    id: "em_2",
+    from: "Daniel Okafor",
+    fromInitials: "DO",
+    subject: "Project Timeline Update",
+    preview: "We're tracking three days ahead of schedule on the backend rollout. Quick sync tomorrow?",
+    receivedAt: minutes(48),
+    unread: true,
+    priority: "normal",
+    needsReply: true,
+    starred: false,
+    tags: ["engineering"],
+  },
+  {
+    id: "em_3",
+    from: "Stripe",
+    fromInitials: "ST",
+    subject: "Invoice Review Needed",
+    preview: "Invoice #18472 is ready for your review before disbursement on Friday.",
+    receivedAt: hours(3),
+    unread: true,
+    priority: "high",
+    needsReply: false,
+    starred: true,
+    tags: ["billing"],
+  },
+  {
+    id: "em_4",
+    from: "Mira Aronov",
+    fromInitials: "MA",
+    subject: "Meeting Notes from Yesterday",
+    preview: "Shared the full notes in Notion. Key decision: we're shipping the v2 brief next sprint.",
+    receivedAt: hours(6),
+    unread: false,
+    priority: "normal",
+    needsReply: false,
+    starred: false,
+    tags: ["design"],
+  },
+  {
+    id: "em_5",
+    from: "Aaron Webb",
+    fromInitials: "AW",
+    subject: "Re: Investor Update — Q2",
+    preview: "Loved the framing. One small comment on the retention slide — happy to jump on a call.",
+    receivedAt: hours(9),
+    unread: false,
+    priority: "high",
+    needsReply: true,
+    starred: false,
+    tags: ["investors"],
+  },
+  {
+    id: "em_6",
+    from: "GitHub",
+    fromInitials: "GH",
+    subject: "Pull request #482 ready for review",
+    preview: "feat(api): add webhook trigger surface for n8n integrations",
+    receivedAt: hours(14),
+    unread: false,
+    priority: "low",
+    needsReply: false,
+    starred: false,
+    tags: ["engineering"],
+  },
+];
+
+export const inboxSummary = {
+  total: sampleEmails.length,
+  unread: sampleEmails.filter((e) => e.unread).length,
+  needsReply: sampleEmails.filter((e) => e.needsReply).length,
+  highPriority: sampleEmails.filter((e) => e.priority === "high").length,
+};

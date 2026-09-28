@@ -1,0 +1,18 @@
+node_modules/
+.next/
+.next-production/
+out/
+.env*
+!.env.example
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+
+# Multi-account local store (encrypted Google OAuth tokens)
+/data/
+
+# Local tooling, launch helpers, and logs
+.claude/
+.codex-start-dev.*
+*.log
+*.err

@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-base: #050507;
+  --bg-layer: #0a0a0c;
+  --border-hairline: rgba(255, 255, 255, 0.06);
+  --text-primary: #f4f4f7;
+  --text-muted: #8a8a93;
+
+  /* Accent color as space-separated RGB so we can apply alpha via Tailwind. */
+  --accent-rgb: 125 211 252;
+
+  /* Dotted grid intensity. ThemeBridge updates this from prefs.gridIntensity. */
+  --grid-opacity: 0.05;
+  --grid-size: 22px;
+
+  /* Local handwriting stack; avoids blocking dev startup on Google Fonts. */
+  --font-handwrite: "Segoe Print", "Marker Felt", "Comic Sans MS", cursive;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-geist-sans), Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.12); }
+
+/* selection */
+::selection { background: rgb(var(--accent-rgb) / 0.25); color: #fff; }
+
+/* hairline border helper */
+.hairline { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+
+/* dotted grid background — uses --grid-opacity so the toggle in Settings works site-wide */
+.bg-dot-grid {
+  background-image: radial-gradient(
+    rgba(255, 255, 255, var(--grid-opacity)) 1px,
+    transparent 1px
+  );
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: 0 0;
+}
+
+/* subtle gradient wash — tied to accent so the chosen color tints the whole canvas */
+.bg-citadel {
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgb(var(--accent-rgb) / 0.05), transparent 60%),
+    radial-gradient(900px 500px at 100% 100%, rgb(var(--accent-rgb) / 0.035), transparent 60%),
+    #050507;
+}
+
+/* React Flow overrides for premium dark feel */
+.react-flow__attribution { display: none !important; }
+.react-flow__pane { cursor: default; }
+.react-flow__handle {
+  background: rgb(var(--accent-rgb) / 0.5) !important;
+  border: 1px solid rgb(var(--accent-rgb) / 0.8) !important;
+  width: 7px !important;
+  height: 7px !important;
+}
+.react-flow__edge-path {
+  stroke-width: 1.1 !important;
+}
+.react-flow__node {
+  font-family: inherit;
+  contain: layout paint style;
+}
+.react-flow__viewport { will-change: transform; }
+.react-flow__controls {
+  background: rgba(15,15,18,0.85) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  color: #c7c7cd !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+.react-flow__controls-button:hover {
+  background: rgb(var(--accent-rgb) / 0.08) !important;
+}
+.react-flow__controls-button svg {
+  fill: currentColor !important;
+}
+.react-flow__minimap {
+  background: rgba(10,10,12,0.7) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  border-radius: 12px !important;
+}
+
+/* dashed flowing edge */
+.flow-dash {
+  stroke-dasharray: 4 6;
+  animation: edgeFlow 1.8s linear infinite;
+}
+@keyframes edgeFlow {
+  to { stroke-dashoffset: -20; }
+}
+
+/* glassy panel */
+.glass {
+  background: linear-gradient(180deg, rgba(20,20,24,0.7), rgba(10,10,12,0.7));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.panel-border {
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.panel-border-hover:hover {
+  border-color: rgba(125, 211, 252, 0.22);
+}
+
+/* subtle pulse */
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 1px solid rgb(var(--accent-rgb) / 0.15);
+  animation: ring 3.2s ease-out infinite;
+}
+@keyframes ring {
+  0% { opacity: 0.0; transform: scale(0.96); }
+  40% { opacity: 0.8; }
+  100% { opacity: 0; transform: scale(1.08); }
+}
+
+/* accent text gradient */
+.text-accent-gradient {
+  background: linear-gradient(180deg, #ffffff 0%, #c7e9fb 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hover micro-animations on command-center icons. Each one is brief
+   (~280ms), runs on the inner SVG so the chip itself stays still.
+   Apply by wrapping a button/link with .icon-hover-{name}. */
+.icon-hover-gear:hover svg {
+  animation: icon-twist 0.55s ease-in-out both;
+}
+.icon-hover-phone:hover svg {
+  animation: icon-ring 0.6s ease-in-out both;
+}
+.icon-hover-bell:hover svg {
+  animation: icon-ring 0.7s ease-in-out both;
+  transform-origin: 50% 25%;
+}
+.icon-hover-lift:hover svg {
+  animation: icon-lift 0.4s ease-out both;
+}
+.icon-hover-spin:hover svg {
+  animation: icon-spin 0.7s ease-out both;
+}
+@keyframes icon-twist {
+  0%   { transform: rotate(0deg); }
+  60%  { transform: rotate(60deg); }
+  100% { transform: rotate(45deg); }
+}
+@keyframes icon-ring {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-12deg); }
+  40%  { transform: rotate(12deg); }
+  60%  { transform: rotate(-8deg); }
+  80%  { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes icon-lift {
+  0%   { transform: translateY(0); }
+  60%  { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+@keyframes icon-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* mono caps tag */
+.mono-tag {
+  font-family: var(--font-geist-mono), ui-monospace, "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
