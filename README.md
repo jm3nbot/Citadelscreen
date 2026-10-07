@@ -1,53 +1,65 @@
 # Citadelscreen
 
-The software that citadel provides.
+Citadelscreen is a personal command center that connects everyday tools in a visual workspace. Switch between an interactive node graph and a dashboard to reach mail, calendars, documents, reminders, and connected services.
 
-> Your digital command center. Build your web. Control your day.
+## Features
 
-A personal AI command center, productivity dashboard, and browser home screen — one screen for everything you run.
+- Draggable app and reminder nodes with saved layouts and a side panel for details.
+- Dashboard, network, apps, automations, inbox, mail, calendar, documents, reminders, and settings pages.
+- Google account connections for Gmail, Calendar, Drive, Docs, Sheets, and YouTube, including multiple Google accounts.
+- Service connections for tools such as GitHub, Spotify, Notion, Slack, Linear, Figma, Discord, Vercel, and n8n.
+- Configurable AI assistants with provider connections and contextual tools.
+- Local notes, tasks, uploaded documents, themes, and workspace preferences.
 
-## Requirements
-
-- **Node.js ≥ 18.17** (Next.js 14 requirement). The current machine has Node 12 — install [Node 20 LTS](https://nodejs.org/) (or use `nvm-windows`) before running.
-
-## Run
-
-```bash
-npm install
-npm run serve
-```
-
-Open <http://127.0.0.1:3000>.
-
-`npm run serve` builds the app once, then runs the optimized server. Use this
-for everyday use: pages are compiled before you click them. After a successful
-build, `npm start` launches the same build without rebuilding. Run `npm run serve`
-again after changing source files. Stop the running server before rebuilding.
-
-For code editing with hot reload, use `npm run dev -- --hostname 127.0.0.1`.
-Development mode compiles routes on demand and can pause on the first visit.
-Production output lives in `.next-production`; development output uses `.next`.
-
-## What's in the box
-
-- **Node Mode** — the main visual identity. An interactive React Flow graph centered on the Citadel core, with draggable app/automation/AI/reminder nodes, animated edges between related tools, and hover/click states. Layout persists to localStorage.
-- **Dashboard Mode** — toggled via the "Unnode" button in the top bar. A traditional dashboard with daily brief, recent Gmail, upcoming calendar, reminders, n8n automations, AI tools, and app shortcuts. Smooth Framer Motion transitions between modes.
-- **Side panel** — click any node to open a sleek right-side panel. Custom views for Gmail, Calendar, n8n, Reminders, AI assistants, the Citadel core, and a generic app fallback.
-- **8 pages** — Home, Network (graph editor), Apps, Automations, Inbox, Calendar, Reminders, Settings.
-- **Settings = control panel** — feature toggles for each surface (inbox/calendar/reminders/automations/aiTools/drive/tasks/network), theme accent, graph behavior (grid, edges, minimap), default view mode, and reset controls.
-- **n8n webhooks** — stubbed for now. Triggering a workflow shows a toast and increments the run counter. Each automation has a webhook URL field for when you wire it up live.
+Individual integrations require their own credentials and provider setup. Some surfaces use sample data or workflow placeholders until configured.
 
 ## Stack
 
-- Next.js 14 (app router) · React 18 · TypeScript
-- Tailwind CSS · Framer Motion · React Flow · Lucide React
-- Zustand (with `persist` middleware) for state + localStorage
+Next.js 14, React 18, TypeScript, Tailwind CSS, React Flow, Framer Motion, Zustand, SWR, and NextAuth.
 
-## Sample data
+## Local development
 
-All Gmail / Calendar / Apps / Reminders / Automations data is fake and lives under `src/lib/data/`. State for reminders, automations, node positions, and preferences persists in `localStorage` under `citadel-store`. Clear it from **Settings → Reset → Clear all local state**.
+Use Node.js 20 or newer and npm.
 
-## Notes
+```bash
+npm ci
+npm run dev -- --hostname 127.0.0.1
+```
 
-- Webhooks are stubbed. To wire to a real n8n endpoint, replace the `triggerAutomation` body in `src/lib/store.ts` with a `fetch(webhookUrl, { method: "POST" })` call.
-- Real OAuth (Gmail / Calendar / Drive) is intentionally not wired. The data shape in `src/lib/types.ts` is real-API-shaped so swapping fake data for a backend later is mostly a one-file change per surface.
+Open [http://127.0.0.1:3000](http://127.0.0.1:3000). Create `.env.local` in the repository root to configure connections:
+
+```dotenv
+NEXTAUTH_URL=http://127.0.0.1:3000
+NEXTAUTH_SECRET=replace-with-a-random-secret
+TOKEN_ENCRYPTION_KEY=replace-with-an-independent-random-secret
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+```
+
+Generate independent secrets with `openssl rand -base64 32`. For Google OAuth, register `http://127.0.0.1:3000/api/auth/callback/google` as a redirect URI. Enable the APIs used by your connected surfaces. The current authorization flow requests Gmail modification access as well as read access for Calendar, Drive metadata, Docs, Sheets, and YouTube.
+
+Optional providers have separate configuration. For example, GitHub uses `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`; Spotify uses `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, and optionally `SPOTIFY_REDIRECT_URI`. Inspect the relevant module under `src/lib/providers/` or its connection route before enabling a service.
+
+## Production build
+
+```bash
+npm run serve   # Build and start on 127.0.0.1:3000
+```
+
+After building, `npm start` reuses the build. Local production output is stored in `.next-production`; development and Vercel use `.next`.
+
+## Storage and hosting
+
+Workspace preferences and local tasks persist in browser storage. Uploaded file blobs use IndexedDB. Connected Google account tokens are encrypted using `TOKEN_ENCRYPTION_KEY` and stored in the gitignored `data/connected-accounts.json` file.
+
+The account store is designed for a single-user local installation with writable persistent disk. A serverless deployment needs a persistent storage strategy for those account records; a successful build alone does not provide it. Keep `.env.local`, OAuth tokens, and the `data/` directory private.
+
+## Repository layout
+
+- `src/app/`: pages, OAuth callbacks, and integration API routes.
+- `src/components/citadel/`: workspace nodes, panels, and dashboard components.
+- `src/lib/`: providers, account storage, state, and assistant tools.
+- `src/lib/data/`: sample content for unconnected surfaces.
+- `public/logos/`: service and application artwork.
+
+Run `npm run build` to compile and `npm run lint` for the configured lint command.
