@@ -2,6 +2,26 @@
 
 Citadelscreen is a personal command center that connects everyday tools in a visual workspace. Switch between an interactive node graph and a dashboard to reach mail, calendars, documents, reminders, and connected services.
 
+## Preview
+
+### Dashboard
+
+![Citadel dashboard with the assistant, daily brief, and quick actions](docs/images/citadel-dashboard.png)
+
+### Connected workspace
+
+![Citadel network view showing connected apps around the command center](docs/images/citadel-network.png)
+
+<details>
+<summary>Showcase artwork</summary>
+
+<p align="center">
+  <img src="docs/images/citadel-orbit.png" alt="Citadel orbit illustration connecting mail, documents, calendar, and reminders" width="45%" />
+  <img src="docs/images/citadel-connected-tools.png" alt="Citadel connected-tools illustration" width="45%" />
+</p>
+
+</details>
+
 ## Features
 
 - Draggable app and reminder nodes with saved layouts and a side panel for details.
